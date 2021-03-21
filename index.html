@@ -133,18 +133,21 @@ border-radius: 3px;
             if (geojson.features.length > 1) {
                 linestring.geometry.coordinates = geojson.features.map(
                     function (point) {
-                        return point.geometry.coordinates;
+                        return point.geometry.coordinates ;
+
                     }
                 );
 
                 geojson.features.push(linestring);
 
+
+                var dis = turf.length(linestring) * 1000;
                 // Populate the distanceContainer with total distance
                 var value = document.createElement('pre');
                 value.textContent =
                     'Total distance: ' +
-                    turf.length(linestring).toLocaleString() +
-                    'km';
+                    dis.toLocaleString() +
+                    'm';
                 distanceContainer.appendChild(value);
             }
 

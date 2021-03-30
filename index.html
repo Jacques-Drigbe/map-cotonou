@@ -19,8 +19,43 @@
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoiamFjcXVlczUiLCJhIjoiY2ttMXpwd2pyNDhzbzJ2cW0yN2dsYXFnYyJ9.Df-9CQghAcj27PvWu8TagA';
 var map = L.mapbox.map('map')
-    .setView([6.346,2.426], 16.50)
-    .addLayer(L.mapbox.styleLayer('mapbox://styles/jacques5/ckmuoglzq56jc17pcpixp8ukp'));
+    .setView([6.346,2.426], 16.50);
+    L.control.layers({
+    'Carte principal': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmuoglzq56jc17pcpixp8ukp').addTo(map),
+    'Bollards': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmv68v8j08c217nvqbfh34as'),
+    'Quais': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmwew6iu0tmm17ny2i4nb7gq'),
+    'Satellite': L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9')
+}).addTo(map);
+  
+  
+  var data = [{
+    lon: 2.429675,
+    lat: 6.348646,
+    name: 'Rome',
+    size: 'large',
+    color: '#c091e6'
+}, {
+    lon: 2.426965,
+    lat: 6.348498,
+    size: 'small',
+    name: 'Istanbul',
+    color: '#fa946e'
+}];
+
+
+
+L.geoJson({
+    type: 'Feature',
+    geometry: {
+        type: 'LineString',
+        coordinates: [[data[0].lon,data[0].lat], [data[1].lon,data[1].lat]]
+    },
+    properties: {
+    "stroke": "#ff8888",
+    "stroke-opacity": 1,
+    "stroke-width": 10,
+    }
+  }, { style: L.mapbox.simplestyle.style }).addTo(map) 
 </script>
 </body>
 </html>

@@ -6,6 +6,7 @@
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -13,10 +14,16 @@
 </head>
 <body>
 
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.js'></script>
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script> 
+
 <div id='map'></div>
-<pre id='distance' class='ui-distance'>Click to place a marker</pre>
+<div id="distance" class="distance-container"></div>
+
 
 <script>
+
 L.mapbox.accessToken = 'pk.eyJ1IjoiamFjcXVlczUiLCJhIjoiY2ttMXpwd2pyNDhzbzJ2cW0yN2dsYXFnYyJ9.Df-9CQghAcj27PvWu8TagA';
 var map = L.mapbox.map('map')
     .setView([6.346,2.426], 16.50);
@@ -30,23 +37,56 @@ var map = L.mapbox.map('map')
 }).addTo(map);
 
 
+
+var featureGroup = L.featureGroup().addTo(map);
+
+var drawControl = new L.Control.Draw({
+  edit: {
+    featureGroup: featureGroup
+  },
+  draw: {
+    polygon: false,
+    polyline: true,
+    rectangle: false,
+    circle: false,
+    marker: false
+  }
+}).addTo(map);
+
+map.on('draw:created', showPolyline);
+map.on('draw:edited', showPolyline);
+
+function showPolyline(e) {
+  e.layers.eachLayer(function(layer) {
+    showPolyline({ layer: layer });
+  });
+}
+function showPolyline(e) {
+  featureGroup.clearLayers();
+  featureGroup.addLayer(e.layer);
+  e.layer.bindPopup((LGeo.line(e.layer)) + ' m');
+  e.layer.openPopup();
+}
+
+
 // Ici je récupère les donnée Json via le Web Service
 // Je les met dans un tableau comme ci-dessous
 var data = [{
-    lon: 2.429675,
-    lat: 6.348646,
+ 
+    lon: 2.429131,
+    lat: 6.348622,
     name: 'HSL PORTSMOUTH',
     Tiran: 11.4,
     type_na: "CARGOSH",
     longeur: '207.54',
     color: '#c091e6'
 }, {
-    lon: 2.426965,
-    lat: 6.348498,
-    name: 'HSL PORTSMOUTH',
-    Tiran: ' <b>T</b>: 11.4m ',
-    type_na: "CARGOSH <br>",
-    longeur: ' <b>L</b>: 207.54m <br>',
+    lon: 2.428591,
+    lat: 6.348596,
+    name: 'OFFSHORE EAGLE',
+    Tiran: ' <b>T</b>: 1.45m ',
+    type_na: "TUG <br>",
+    longeur: ' <b>L</b>: 15m <br>',
     color: '#fa946e'
 },  {
     lon: 2.423305,
@@ -59,6 +99,21 @@ var data = [{
 }, {
     lon: 2.422175,
     lat: 6.34815,
+    size: '175m',
+    name: 'Istanbul',
+    color: '#fa946e'
+},
+{ 
+    lon: 2.431302,
+    lat: 6.348697,
+    name: 'LUCKY SEA',
+    Tiran: ' <b>T</b>: 12.69m ',
+    type_na: "CARGOSH <br>",
+    longeur: ' <b>L</b>: 189.9m <br>',
+    color: '#c091e6'
+}, {      
+    lon: 2.429675,
+    lat: 6.348646,
     size: '175m',
     name: 'Istanbul',
     color: '#fa946e'
@@ -96,6 +151,21 @@ L.geoJson({
     geometry: {
         type: 'LineString',
         coordinates: [[data[2].lon,data[2].lat], [data[3].lon,data[3].lat]]
+    },
+    properties: {
+    description: '1718 14th St NW, Washington, DC, L:177.13',
+    "stroke": "blue",
+    "stroke-opacity": 1,
+    "stroke-width": 12,
+    }
+  }, { style: L.mapbox.simplestyle.style }).addTo(map) 
+
+// Nav 3
+  L.geoJson({
+    type: 'Feature',
+    geometry: {
+        type: 'LineString',
+        coordinates: [[data[4].lon,data[4].lat], [data[5].lon,data[5].lat]]
     },
     properties: {
     description: '1718 14th St NW, Washington, DC, L:177.13',
@@ -152,6 +222,33 @@ L.mapbox.featureLayer({
         'marker-color': '#BE9A6B'
     }
 }).addTo(map);
+
+// Test 2-4
+
+L.mapbox.featureLayer({
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        //  coordonnées Lon, Lat
+        coordinates: [
+        data[4].lon,
+        data[4].lat
+        ]
+    },
+    properties: {
+        title: [data[4].name],
+        description: [[data[4].type_na, data[4].longeur, data[4].Tiran,data[4].size]],
+        'marker-size': 'large',
+        'marker-color': '#BE9A6B'
+    }
+}).addTo(map);
+
+
+
+</script>
+
+<script>
+
 </script>
 </body>
 </html>

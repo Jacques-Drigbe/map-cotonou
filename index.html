@@ -20,28 +20,57 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoiamFjcXVlczUiLCJhIjoiY2ttMXpwd2pyNDhzbzJ2cW0yN2dsYXFnYyJ9.Df-9CQghAcj27PvWu8TagA';
 var map = L.mapbox.map('map')
     .setView([6.346,2.426], 16.50);
+    
     L.control.layers({
     'Carte principal': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmuoglzq56jc17pcpixp8ukp').addTo(map),
     'Bollards': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmv68v8j08c217nvqbfh34as'),
     'Quais': L.mapbox.styleLayer('mapbox://styles/jacques5/ckmwew6iu0tmm17ny2i4nb7gq'),
-    'Satellite': L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9')
+    'Satellite': L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9'),
+
 }).addTo(map);
-  
-  
-  var data = [{
+
+
+// Ici je récupère les donnée Json via le Web Service
+// Je les met dans un tableau comme ci-dessous
+var data = [{
     lon: 2.429675,
     lat: 6.348646,
-    name: 'Rome',
-    size: 'large',
+    name: 'HSL PORTSMOUTH',
+    Tiran: 11.4,
+    type_na: "CARGOSH",
+    longeur: '207.54',
     color: '#c091e6'
 }, {
     lon: 2.426965,
     lat: 6.348498,
-    size: 'small',
+    name: 'HSL PORTSMOUTH',
+    Tiran: ' <b>T</b>: 11.4m ',
+    type_na: "CARGOSH <br>",
+    longeur: ' <b>L</b>: 207.54m <br>',
+    color: '#fa946e'
+},  {
+    lon: 2.423305,
+    lat: 6.348247,
+    name: 'KAPELLEN',
+    Tiran: ' <b>T</b>: 10.41m ',
+    type_na: "NOBOAT <br>",
+    longeur: ' <b>L</b>: 181.7m <br>',
+    color: '#c091e6'
+}, {
+    lon: 2.422175,
+    lat: 6.34815,
+    size: '175m',
     name: 'Istanbul',
     color: '#fa946e'
 }];
 
+// Test 2
+
+
+
+
+// Puis je fais une recherche dans le tableau 
+// Pour récuperer les coordonnées des bollards Deb et Fin Si ils sont renseigné
 
 
 L.geoJson({
@@ -51,11 +80,78 @@ L.geoJson({
         coordinates: [[data[0].lon,data[0].lat], [data[1].lon,data[1].lat]]
     },
     properties: {
-    "stroke": "#ff8888",
+    description: '1718 14th St NW, Washington, DC, L:177.13',
+    "stroke": "#fc4353",
     "stroke-opacity": 1,
-    "stroke-width": 10,
+    "stroke-width": 12,
     }
   }, { style: L.mapbox.simplestyle.style }).addTo(map) 
+
+
+// Test 2-1
+
+
+L.geoJson({
+    type: 'Feature',
+    geometry: {
+        type: 'LineString',
+        coordinates: [[data[2].lon,data[2].lat], [data[3].lon,data[3].lat]]
+    },
+    properties: {
+    description: '1718 14th St NW, Washington, DC, L:177.13',
+    "stroke": "blue",
+    "stroke-opacity": 1,
+    "stroke-width": 12,
+    }
+  }, { style: L.mapbox.simplestyle.style }).addTo(map) 
+
+
+
+
+// Puis je fais une recherche dans le tableau 
+// Pour récuperer les coordonnées des bollards Deb et Fin Si ils sont renseigné
+// Je récupère les coordonnées du bollards Deb à laquelle j'ajoute un Marker
+// Puis je récupère les informations ( Nom du navire, distance, longeur, Tiran d'eau )
+// Que je passe par parametre 
+
+L.mapbox.featureLayer({
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        //  coordonnées Lon, Lat
+        coordinates: [
+        data[1].lon,
+        data[1].lat
+        ]
+    },
+    properties: {
+        title: [data[1].name],
+        description: [[data[1].type_na, data[1].longeur, data[1].Tiran,data[1].size]],
+        'marker-size': 'large',
+        'marker-color': '#BE9A6B'
+    }
+}).addTo(map);
+
+
+// Test 2-3
+
+L.mapbox.featureLayer({
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        //  coordonnées Lon, Lat
+        coordinates: [
+        data[3].lon,
+        data[3].lat
+        ]
+    },
+    properties: {
+        title: [data[2].name],
+        description: [[data[2].type_na, data[2].longeur, data[2].Tiran,data[2].size]],
+        'marker-size': 'large',
+        'marker-color': '#BE9A6B'
+    }
+}).addTo(map);
 </script>
 </body>
 </html>

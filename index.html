@@ -414,26 +414,7 @@ var popup = new mapboxgl.Popup({ closeOnClick: false })
 
 
 
-   var from3 =  [ 2.433069348335266,6.348093797543224] 
-   var to3 =     [ 2.433069348335266,6.348093797543224]
 
-         var to_debor3 = 23
-      var from_debor3 = 20
-
-      var debor3 = (to_debor3 + from_debor3)
-
-      var options3 = {
-        units: 'kilometers'
-      }; // Important unité de mésure
-
-      var distance3 = turf.distance(to3, from3, options3); // Calcule la distance en kilomètre
-      var dis3 = (distance3 * 1000) // Conversion en mètre
-      var dist3 = (dis3 - debor3)
-
-var popup = new mapboxgl.Popup({ closeOnClick: false })
-.setLngLat([ 2.4222171306610107,6.345337391188274])
-.setHTML('Distance disponible <br> '+ dis3.toFixed([2]) + " m")
-.addTo(map);
 
 
 

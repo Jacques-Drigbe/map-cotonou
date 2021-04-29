@@ -60,7 +60,10 @@
   // .then(res => res.json())
    // .then(res2 => console.log(res2)); 
 
-     
+// ici je les recupère 
+fetch('/https://vtr21ben.pac.bj/WS_Escales')
+    .then(res => res.json())
+    .then(data => {       
 
 
         // ici je upload la catre 
@@ -404,18 +407,6 @@ var popup = new mapboxgl.Popup({ closeOnClick: false })
 .setLngLat([2.422914505004883,6.348243080251627])
 .setHTML('Nom : MARITIME LONGEVIT <br> Longueur : 199.98m <br>')
 .addTo(map);
-          
- //Q8
-var popup = new mapboxgl.Popup({ closeOnClick: false })
-.setLngLat([2.420436143875122,6.348045813806317])
-.setHTML('Nom : KAPTAN ARIF BAYRA <br> Longueur : 195m <br>')
-.addTo(map);
- 
- //QP2
-var popup = new mapboxgl.Popup({ closeOnClick: false })
-.setLngLat([2.4321144819259644,6.34593452495764])
-.setHTML('Nom : WESTERN SINGAPORE <br> Longueur : 199.9m <br>')
-.addTo(map);
 
  //  {'type': 'Feature','properties': {},'geometry': {'type': 'LineString','coordinates': [Q1B20, Q1B22]}}
 /*
@@ -596,7 +587,6 @@ var popup = new mapboxgl.Popup({ closeOnClick: false })
 
 
   }
- 
 
 
       // Variable Aléatoire 

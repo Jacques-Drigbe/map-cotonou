@@ -52,6 +52,12 @@
     <script>
       // Carte MAPBOXE 
       mapboxgl.accessToken = 'pk.eyJ1IjoiamFjcXVlczUiLCJhIjoiY2ttMXpwd2pyNDhzbzJ2cW0yN2dsYXFnYyJ9.Df-9CQghAcj27PvWu8TagA';
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/jacques5/ckmuoglzq56jc17pcpixp8ukp',
+        center: [2.426, 6.346],
+        zoom: 16
+      });
 
 
       // Appel du WebService VTR21 5/5
@@ -61,23 +67,13 @@
    // .then(res2 => console.log(res2)); 
 
 // ici je les recupère 
-fetch('https://cors-anywhere.herokuapp.com/https://vtr21ben.pac.bj/WS_Escales')
-    .then(res => res.json())
-    .then(data => {       
-
+    
 
         // ici je upload la catre 
-      var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/jacques5/ckmuoglzq56jc17pcpixp8ukp',
-        center: [2.426, 6.346],
-        zoom: 16
-      });
 
 
 
 
-      for (i = 0; i < data.length; i++){ // 
 
         //  let positionDuBateau = [
           // Pour avoir sa longitude tu vas devoir faire long_fin - lng_debut
@@ -88,24 +84,7 @@ fetch('https://cors-anywhere.herokuapp.com/https://vtr21ben.pac.bj/WS_Escales')
  // console.log(data[i].NAVIRE)
 //console.log(data[i].LEQUAI)
 
-  // ICI je selection uniquement les navire a quai 
-        if (data[i].SITUATION == 4 ){
 
-
-            console.log(data[i].NAVIRE);
-            console.log(data[i].LEQUAI);
-            console.log(data[i].LONGUEUR);
-            console.log(data[i]);
- 
-         var bollards = [
-        //    QA_B1 = [2.426965, 6.348498],
-         // Q1B9 = [2.42183,6.345266], //Q2B9
-         // Q2B3 = [2.41981,6.345104], // Q2B3
-         // QA_B2 = [2.425611,6.348434],
-         // Q1B21 = [2.425881,6.348449],
-         // Q1B20 = [2.426154,6.348448],
-         // Q1B22 = [2.425611,6.348434]
-          ] 
 
 
 
@@ -575,18 +554,7 @@ var popup = new mapboxgl.Popup({ closeOnClick: false })
 
 
 
-
-
-
-
-          
-
-
-
-             }
-
-
-  }})
+  
  
 
 
